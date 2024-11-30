@@ -1,7 +1,6 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
-import pokemon from './pokemon.json';
 import PropTypes from 'prop-types';
 
 const PokemonRow = ({pokemon, onSelect}) => (
@@ -26,6 +25,7 @@ const PokemonInfo = ({name, base}) => (
   <div>
     <h1>{name.english}</h1>
     <table>
+      <tbody>
       {
         Object.keys(base).map(key => (
           <tr key={key}>
@@ -34,6 +34,7 @@ const PokemonInfo = ({name, base}) => (
           </tr>
         ))
       }
+      </tbody>
     </table>
   </div>
 );
@@ -55,6 +56,14 @@ PokemonInfo.propTypes = {
 function App() {
   const [filter, filterSet] = React.useState("");
   const [selectedItem, selectedItemSet] = React.useState(null);
+  const [pokemon, pokemonSet] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("//localhost:3000/video-overlay/pokemon.json")
+    .then(resp => resp.json())
+    .then((data) => pokemonSet(data));
+  }, [filter])
+
   return (
     <div className="App" style={{
       margin: "auto",
