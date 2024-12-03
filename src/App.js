@@ -60,7 +60,7 @@ function App() {
       <div className="orangeButton" style={{
         display: showButton
       }}>
-        <img src="//localhost:3000/video-overlay/orange.png" alt="orange" />
+        <img src="//adanaltamira.com/video-overlay/orange.png" alt="orange" />
       </div>
       <YouTube
         videoId={"VYOjWnS4cMY"}                  // defaults -> ''
