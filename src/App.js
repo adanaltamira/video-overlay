@@ -22,10 +22,9 @@ const youTubeOpts = {
 function App() {
   const [oldTime, setOldTime] = useState(0);
   const [player, setPlayer] = useState(null);
-  // const [timeUpdater, setTimeUpdater] = useState(null);
   const [videoTime, setVideoTime] = useState(0);
+  const [showButton, setShowButton] = useState("none");
   const updateTime = (player) => {
-    // let oldTime = videoTime;
     setOldTime(videoTime);
     if(player && player.getCurrentTime) {
       setVideoTime(player.getCurrentTime());
@@ -37,14 +36,16 @@ function App() {
   // when the time changes, this will be called.
   const onProgress = (currentTime) => {
     if(currentTime > 10) {
-      console.log("the video reached 10 seconds!");
+      // console.log("the video reached 10 seconds!");
+      setShowButton("block");
+    }
+    if(currentTime > 20) {
+      // console.log("the video reached 10 seconds!");
+      setShowButton("none");
     }
   };
   const onPlayerPlay = (evt) => {
     setPlayer(evt.target);
-    // setTimeUpdater(setInterval(()=>{
-    //   updateTime(player)
-    // }, 100));
   };
   useEffect(() => { 
     const timeUpdater = setInterval(() => {
@@ -57,7 +58,7 @@ function App() {
   return (
     <div className="App">
       <div className="orangeButton" style={{
-        display: "none"
+        display: showButton
       }}>
         <img src="//localhost:3000/video-overlay/orange.png" alt="orange" />
       </div>
