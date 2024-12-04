@@ -6,24 +6,47 @@ import YouTube from 'react-youtube';
 const youTubeOpts = {
   playerVars: {
     // https://developers.google.com/youtube/player_parameters
-    autoplay: 1,
+    autoplay: 0,
     controls: 0,
   },
 };
 
-// const onStateChangeFunc = (evt) => {
-//   if (evt.data === 2)
-//     console.log("onStateChangeFunc", evt);
-// };
-// let player;
-// let timeupdater = null;
-// let videotime = 0;
+const OrangeButton = ({ showButton, setShowOverlayContent }) => (
+  <div 
+    className="orangeButton" 
+    onClick={() => setShowOverlayContent("block")}
+    style={{
+      display: showButton
+    }}
+  >
+    <img src="//adanaltamira.com/video-overlay/orange.png" alt="orange" />
+  </div>
+);
+
+const OverlayContainer = ({ showOverlayContent, setShowOverlayContent }) => (
+  <div 
+    className="overlayContainer" 
+    onClick={() => setShowOverlayContent("none")}
+    style={{
+      display: showOverlayContent 
+    }}
+    >
+    <div className="overlayContent">
+      <h1>Guitar</h1>
+      <button>Buy!</button>
+      <div className="overlayImageContainer">
+        <img src="//adanaltamira.com/video-overlay/guitar.png" alt="guitar"/>
+      </div>
+    </div>
+  </div>
+);
 
 function App() {
   const [oldTime, setOldTime] = useState(0);
   const [player, setPlayer] = useState(null);
   const [videoTime, setVideoTime] = useState(0);
   const [showButton, setShowButton] = useState("none");
+  const [showOverlayContent, setShowOverlayContent] = useState("none");
   const updateTime = (player) => {
     setOldTime(videoTime);
     if(player && player.getCurrentTime) {
@@ -57,28 +80,17 @@ function App() {
   });
   return (
     <div className="App">
-      <div className="orangeButton" style={{
-        display: showButton
-      }}>
-        <img src="//adanaltamira.com/video-overlay/orange.png" alt="orange" />
-      </div>
+      <header>
+        <h1>GILGA TV</h1>
+      </header>
+      <OrangeButton showButton={showButton} setShowOverlayContent={setShowOverlayContent}></OrangeButton>
+      <OverlayContainer showOverlayContent={showOverlayContent} setShowOverlayContent={setShowOverlayContent}></OverlayContainer>
       <YouTube
-        videoId={"VYOjWnS4cMY"}                  // defaults -> ''
-        // id={string}                       // defaults -> ''
-        className={"youTubeStyle"}                // defaults -> ''
-        iframeClassName={"youTubeStyle"}          // defaults -> ''
-        // style={string}                    // defaults -> {}
-        // title={string}                    // defaults -> ''
-        // loading={string}                  // defaults -> undefined
-        opts={youTubeOpts}                        // defaults -> {}
-        // onReady={onPlayerReady}                    // defaults -> noop
-        onPlay={onPlayerPlay}                     // defaults -> noop
-        // onPause={func}                    // defaults -> noop
-        // onEnd={func}                      // defaults -> noop
-        // onError={func}                    // defaults -> noop
-        // onStateChange={onStateChangeFunc}              // defaults -> noop
-        // onPlaybackRateChange={func}       // defaults -> noop
-        // onPlaybackQualityChange={func}    // defaults -> noop
+        videoId={"VYOjWnS4cMY"}
+        className={"youTubeStyle"}
+        iframeClassName={"youTubeStyle"}
+        opts={youTubeOpts}
+        onPlay={onPlayerPlay}
       />
     </div>
   );
